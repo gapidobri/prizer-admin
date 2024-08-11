@@ -1,33 +1,31 @@
 <script lang="ts">
-	import type { Prize } from '$lib/api';
 	import { createTable, Subscribe, Render, createRender } from 'svelte-headless-table';
 	import { readable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 	import DataTableActions from './DataTableActions.svelte';
+	import type { User } from '$lib/api';
 
-	export let prizes: Prize[];
+	export let users: User[];
 
-	const table = createTable(readable(prizes));
+	const table = createTable(readable(users));
 
 	const columns = table.createColumns([
 		table.column({
-			accessor: 'name',
-			header: 'Name',
+			accessor: 'email',
+			header: 'E-mail',
 		}),
 		table.column({
-			accessor: 'description',
-			header: 'Description',
+			accessor: 'address',
+			header: 'Address',
 		}),
 		table.column({
-			accessor: 'count',
-			header: 'Count',
+			accessor: 'phone',
+			header: 'Phone',
 		}),
 		table.column({
 			accessor: ({ id }) => id,
 			header: '',
-			cell: ({ value }) => {
-				return createRender(DataTableActions, { id: value });
-			},
+			cell: ({ value }) => createRender(DataTableActions, { id: value }),
 		}),
 	]);
 

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Prize } from '$lib/api';
 	import { createTable, Subscribe, Render, createRender } from 'svelte-headless-table';
 	import { readable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
-	import DataTableActions from './DataTableActions.svelte';
+	import type { ParticipationMethod } from '$lib/api';
+	import EditParticipationMethod from './EditParticipationMethod.svelte';
 
-	export let prizes: Prize[];
+	export let participationMethods: ParticipationMethod[];
 
-	const table = createTable(readable(prizes));
+	const table = createTable(readable(participationMethods));
 
 	const columns = table.createColumns([
 		table.column({
@@ -15,18 +15,28 @@
 			header: 'Name',
 		}),
 		table.column({
-			accessor: 'description',
-			header: 'Description',
+			accessor: 'limit',
+			header: 'Limit',
+			cell: ({ value }) => {
+				if (!value) return '';
+				return value.charAt(0).toUpperCase() + value.substring(1);
+			},
 		}),
 		table.column({
-			accessor: 'count',
-			header: 'Count',
+			accessor: (item) => item.fields.user,
+			header: 'User Fields',
+			cell: ({ value }) => Object.keys(value).join(', '),
 		}),
 		table.column({
-			accessor: ({ id }) => id,
+			accessor: (item) => item.fields.participation,
+			header: 'Participation Fields',
+			cell: ({ value }) => Object.keys(value).join(', '),
+		}),
+		table.column({
+			accessor: (item) => item,
 			header: '',
 			cell: ({ value }) => {
-				return createRender(DataTableActions, { id: value });
+				return createRender(EditParticipationMethod, { participationMethod: value });
 			},
 		}),
 	]);

@@ -1,23 +1,26 @@
 <script lang="ts">
-	import type { Game } from '$lib/api/models';
-	import { createTable, Subscribe, Render, createRender } from 'svelte-headless-table';
+	import { createTable, Subscribe, Render } from 'svelte-headless-table';
 	import { readable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
-	import DataTableActions from './DataTableActions.svelte';
+	import type { WonPrize } from '$lib/api';
 
-	export let games: Game[];
+	export let wonPrizes: WonPrize[];
 
-	const table = createTable(readable(games));
+	const table = createTable(readable(wonPrizes));
 
 	const columns = table.createColumns([
 		table.column({
-			accessor: 'name',
-			header: 'Name',
+			accessor: (wonPrize) => wonPrize.prize.name,
+			header: 'Prize',
 		}),
 		table.column({
-			accessor: ({ id }) => id,
-			header: '',
-			cell: ({ value }) => createRender(DataTableActions, { id: value }),
+			accessor: (wonPrize) => wonPrize.user.email,
+			header: 'E-mail',
+		}),
+		table.column({
+			accessor: (wonPrize) => wonPrize.participation.created_at,
+			header: 'Time',
+			cell: ({ value }) => new Date(value).toLocaleString(),
 		}),
 	]);
 

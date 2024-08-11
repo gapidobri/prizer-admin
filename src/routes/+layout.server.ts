@@ -1,10 +1,11 @@
 import type { LayoutServerLoad } from './$types';
-import { getGames } from '$lib/api/api';
+import { getGames } from '$lib/api';
 
 export const load: LayoutServerLoad = async ({ params }) => {
-	const games = await getGames();
+	const response = await getGames();
+
 	return {
-		games,
+		games: response.data!,
 		selectedGameId: params.gameId,
 	};
 };

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Game } from '$lib/api/models';
 	import * as Select from '$lib/components/ui/select/index.js';
+	import type { Game } from '$lib/api';
 
 	export let games: Game[];
 	export let selectedId: string | null = null;

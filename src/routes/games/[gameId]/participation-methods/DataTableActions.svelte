@@ -19,7 +19,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item on:click={() => console.log('delete game', id)}>
+		<DropdownMenu.Item on:click={() => console.log('delete user', id)}>
 			Delete
 		</DropdownMenu.Item>
 	</DropdownMenu.Content>

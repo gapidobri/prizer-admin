@@ -17,12 +17,12 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
-	import { Gem, Gift } from 'lucide-svelte';
+	import { Gem, Gift, PartyPopper } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import NavItem from './NavItem.svelte';
 	import GameDropdown from './GameDropdown.svelte';
-	import type { Game } from '$lib/api/models';
 	import { goto } from '$app/navigation';
+	import type { Game } from '$lib/api';
 
 	export let data: LayoutServerData;
 
@@ -32,9 +32,12 @@
 		path = parts.length >= 4 ? parts[3] : 'dashboard';
 	}
 
-	function handleGameSelect(game?: Game) {
+	async function handleGameSelect(game?: Game) {
 		if (!game) return;
-		goto(`/games/${game.id}`);
+		// const parts = $page.url.pathname.split('/');
+		// parts[2] = game.id;
+		// await goto(parts.join('/'));
+		await goto(`/games/${game.id}`);
 	}
 </script>
 
@@ -66,17 +69,21 @@
 						<Gift class="h-4 w-4" />
 						Prizes
 					</NavItem>
-					<NavItem href="##" active={path === 'users'}>
+					<NavItem href="/games/{data.selectedGameId}/won-prizes" active={path === 'won-prizes'}>
+						<PartyPopper class="h-4 w-4" />
+						Won Prizes
+					</NavItem>
+					<NavItem href="/games/{data.selectedGameId}/users" active={path === 'users'}>
 						<Users class="h-4 w-4" />
 						Users
 					</NavItem>
-					<NavItem href="##" active={path === 'draw-methods'}>
-						<Users class="h-4 w-4" />
-						Draw Methods
-					</NavItem>
-					<NavItem href="##" active={path === 'participation-methods'}>
+					<NavItem href="/games/{data.selectedGameId}/participation-methods" active={path === 'participation-methods'}>
 						<Users class="h-4 w-4" />
 						Participation Methods
+					</NavItem>
+					<NavItem href="/games/{data.selectedGameId}/draw-methods" active={path === 'draw-methods'}>
+						<Users class="h-4 w-4" />
+						Draw Methods
 					</NavItem>
 				</nav>
 			</div>
