@@ -11,7 +11,7 @@
 	export let participationMethod: ParticipationMethod;
 </script>
 
-<Sheet.Root open={participationMethod.id === 'f565ea70-cf14-42b9-8108-cf6033e69fde'}>
+<Sheet.Root>
 	<Sheet.Trigger asChild let:builder>
 		<Button builders={[builder]} variant="outline">Edit</Button>
 	</Sheet.Trigger>

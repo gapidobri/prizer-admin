@@ -1,5 +1,6 @@
+import { env } from '$env/dynamic/private';
 import { client } from '$lib/api';
 
 client.setConfig({
-	baseUrl: 'http://localhost:8081',
+	baseUrl: env.ADMIN_API_URL,
 });
