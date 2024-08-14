@@ -17,7 +17,7 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Sheet from '$lib/components/ui/sheet/index.js';
-	import { Gem, Gift, PartyPopper } from 'lucide-svelte';
+	import { Gem, Gift, PartyPopper, Percent, TextCursorInput } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import NavItem from './NavItem.svelte';
 	import GameDropdown from './GameDropdown.svelte';
@@ -27,9 +27,11 @@
 	export let data: LayoutServerData;
 
 	let path: string = 'dashboard';
+	let gameSelected = false;
 	$: {
 		const parts = $page.url.pathname.split('/');
 		path = parts.length >= 4 ? parts[3] : 'dashboard';
+		gameSelected = parts.length >= 3;
 	}
 
 	async function handleGameSelect(game?: Game) {
@@ -49,42 +51,42 @@
 			<div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
 				<a href="/" class="flex items-center gap-2 font-semibold">
 					<Gem class="h-6 w-6" />
-					<span class="">Prizer</span>
+					<span>Prizer</span>
 				</a>
 			</div>
 			<div class="px-4 py-2">
 				<GameDropdown
 					games={data.games}
-					selectedId={data.selectedGameId}
+					selectedId={data.selectedGame?.id}
 					onSelect={handleGameSelect}
 				/>
 			</div>
 			<div class="flex-1">
 				<nav class="grid items-start px-2 text-sm font-medium lg:px-4">
-					<NavItem href="/games/{data.selectedGameId}" active={path === 'dashboard'}>
-						<House class="h-4 w-4" />
-						Dashboard
-					</NavItem>
-					{#if data.selectedGameId}
-						<NavItem href="/games/{data.selectedGameId}/prizes" active={path === 'prizes'}>
+					{#if gameSelected}
+						<NavItem href="/games/{data.selectedGame?.id}" active={path === 'dashboard'}>
+							<House class="h-4 w-4" />
+							Dashboard
+						</NavItem>
+						<NavItem href="/games/{data.selectedGame?.id}/prizes" active={path === 'prizes'}>
 							<Gift class="h-4 w-4" />
 							Prizes
 						</NavItem>
-						<NavItem href="/games/{data.selectedGameId}/won-prizes" active={path === 'won-prizes'}>
+						<NavItem href="/games/{data.selectedGame?.id}/won-prizes" active={path === 'won-prizes'}>
 							<PartyPopper class="h-4 w-4" />
 							Won Prizes
 						</NavItem>
-						<NavItem href="/games/{data.selectedGameId}/users" active={path === 'users'}>
+						<NavItem href="/games/{data.selectedGame?.id}/users" active={path === 'users'}>
 							<Users class="h-4 w-4" />
 							Users
 						</NavItem>
-						<NavItem href="/games/{data.selectedGameId}/participation-methods"
+						<NavItem href="/games/{data.selectedGame?.id}/participation-methods"
 										 active={path === 'participation-methods'}>
-							<Users class="h-4 w-4" />
+							<TextCursorInput class="h-4 w-4" />
 							Participation Methods
 						</NavItem>
-						<NavItem href="/games/{data.selectedGameId}/draw-methods" active={path === 'draw-methods'}>
-							<Users class="h-4 w-4" />
+						<NavItem href="/games/{data.selectedGame?.id}/draw-methods" active={path === 'draw-methods'}>
+							<Percent class="h-4 w-4" />
 							Draw Methods
 						</NavItem>
 					{/if}

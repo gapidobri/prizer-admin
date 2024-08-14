@@ -6,6 +6,6 @@ export const load: LayoutServerLoad = async ({ params }) => {
 
 	return {
 		games: response.data!,
-		selectedGameId: params.gameId,
+		selectedGame: response.data?.find((game) => game.id === params.gameId),
 	};
 };
