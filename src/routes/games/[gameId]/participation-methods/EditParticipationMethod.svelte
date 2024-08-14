@@ -15,7 +15,7 @@
 	<Sheet.Trigger asChild let:builder>
 		<Button builders={[builder]} variant="outline">Edit</Button>
 	</Sheet.Trigger>
-	<Sheet.Content>
+	<Sheet.Content class="overflow-y-scroll">
 		<Sheet.Header>
 			<Sheet.Title>Edit {participationMethod.name}</Sheet.Title>
 		</Sheet.Header>
@@ -31,6 +31,10 @@
 			<div class="flex flex-col gap-2">
 				<span class="text-lg font-semibold">User Fields</span>
 				<Fields bind:fields={participationMethod.fields.user} />
+			</div>
+			<div class="flex flex-col gap-2">
+				<span class="text-lg font-semibold">Participation Fields</span>
+				<Fields bind:fields={participationMethod.fields.participation} />
 			</div>
 		</form>
 		<Sheet.Footer>

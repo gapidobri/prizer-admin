@@ -65,26 +65,29 @@
 						<House class="h-4 w-4" />
 						Dashboard
 					</NavItem>
-					<NavItem href="/games/{data.selectedGameId}/prizes" active={path === 'prizes'}>
-						<Gift class="h-4 w-4" />
-						Prizes
-					</NavItem>
-					<NavItem href="/games/{data.selectedGameId}/won-prizes" active={path === 'won-prizes'}>
-						<PartyPopper class="h-4 w-4" />
-						Won Prizes
-					</NavItem>
-					<NavItem href="/games/{data.selectedGameId}/users" active={path === 'users'}>
-						<Users class="h-4 w-4" />
-						Users
-					</NavItem>
-					<NavItem href="/games/{data.selectedGameId}/participation-methods" active={path === 'participation-methods'}>
-						<Users class="h-4 w-4" />
-						Participation Methods
-					</NavItem>
-					<NavItem href="/games/{data.selectedGameId}/draw-methods" active={path === 'draw-methods'}>
-						<Users class="h-4 w-4" />
-						Draw Methods
-					</NavItem>
+					{#if data.selectedGameId}
+						<NavItem href="/games/{data.selectedGameId}/prizes" active={path === 'prizes'}>
+							<Gift class="h-4 w-4" />
+							Prizes
+						</NavItem>
+						<NavItem href="/games/{data.selectedGameId}/won-prizes" active={path === 'won-prizes'}>
+							<PartyPopper class="h-4 w-4" />
+							Won Prizes
+						</NavItem>
+						<NavItem href="/games/{data.selectedGameId}/users" active={path === 'users'}>
+							<Users class="h-4 w-4" />
+							Users
+						</NavItem>
+						<NavItem href="/games/{data.selectedGameId}/participation-methods"
+										 active={path === 'participation-methods'}>
+							<Users class="h-4 w-4" />
+							Participation Methods
+						</NavItem>
+						<NavItem href="/games/{data.selectedGameId}/draw-methods" active={path === 'draw-methods'}>
+							<Users class="h-4 w-4" />
+							Draw Methods
+						</NavItem>
+					{/if}
 				</nav>
 			</div>
 		</div>
