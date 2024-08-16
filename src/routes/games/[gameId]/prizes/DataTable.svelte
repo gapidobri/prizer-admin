@@ -1,13 +1,16 @@
 <script lang="ts">
 	import type { Prize } from '$lib/api';
 	import { createTable, Subscribe, Render, createRender } from 'svelte-headless-table';
-	import { readable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 	import DataTableActions from './DataTableActions.svelte';
 
 	export let prizes: Prize[];
 
-	const table = createTable(readable(prizes));
+	const w = writable(prizes);
+	$: w.set(prizes);
+
+	const table = createTable(w);
 
 	const columns = table.createColumns([
 		table.column({
@@ -19,15 +22,17 @@
 			header: 'Description',
 		}),
 		table.column({
+			accessor: 'won_count',
+			header: 'Won',
+		}),
+		table.column({
 			accessor: 'count',
 			header: 'Count',
 		}),
 		table.column({
-			accessor: ({ id }) => id,
+			accessor: (prize) => prize,
 			header: '',
-			cell: ({ value }) => {
-				return createRender(DataTableActions, { id: value });
-			},
+			cell: ({ value }) => createRender(DataTableActions, { prize: value }),
 		}),
 	]);
 

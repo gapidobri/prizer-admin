@@ -2,9 +2,16 @@
 	import Ellipsis from 'lucide-svelte/icons/ellipsis';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
+	import { toast } from 'svelte-sonner';
+	import DeletePrize from './DeletePrize.svelte';
+	import type { Prize } from '$lib/api';
 
-	export let id: string;
+	export let prize: Prize;
+
+	let deleteDialogOpen = false;
 </script>
+
+<DeletePrize bind:open={deleteDialogOpen} {prize} />
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
@@ -19,7 +26,17 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item on:click={() => console.log('delete prize', id)}>
+		<DropdownMenu.Group>
+			<DropdownMenu.Label>Actions</DropdownMenu.Label>
+			<DropdownMenu.Item on:click={() => {
+				navigator.clipboard.writeText(prize.id);
+				toast.success('ID copied to clipboard');
+			}}>
+				Copy ID
+			</DropdownMenu.Item>
+		</DropdownMenu.Group>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item on:click={() => deleteDialogOpen = true}>
 			Delete
 		</DropdownMenu.Item>
 	</DropdownMenu.Content>

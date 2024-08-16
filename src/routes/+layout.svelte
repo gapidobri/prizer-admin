@@ -23,6 +23,7 @@
 	import GameDropdown from './GameDropdown.svelte';
 	import { goto } from '$app/navigation';
 	import type { Game } from '$lib/api';
+	import { Toaster } from '$lib/components/ui/sonner';
 
 	export let data: LayoutServerData;
 
@@ -44,6 +45,7 @@
 </script>
 
 <ModeWatcher />
+<Toaster />
 
 <div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
 	<div class="bg-muted/40 hidden border-r md:block">
