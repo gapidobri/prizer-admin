@@ -2,7 +2,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { getParticipationMethods, updateParticipationMethod, type UpdateParticipationMethodRequest } from '$lib/api';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const res = await getParticipationMethods({ query: { gameId: params.gameId } });
+	const res = await getParticipationMethods({ query: { game_id: params.gameId } });
 	return { participationMethods: res.data! };
 };
 
