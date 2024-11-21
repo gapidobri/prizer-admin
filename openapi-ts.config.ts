@@ -6,5 +6,6 @@ export default defineConfig({
 	output: 'src/lib/api',
 	types: {
 		enums: 'javascript',
+		dates: 'types+transform',
 	},
 });

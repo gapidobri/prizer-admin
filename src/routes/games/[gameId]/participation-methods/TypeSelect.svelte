@@ -14,7 +14,6 @@
 
 <Select.Root
 	portal={null}
-	name="limit"
 	{items}
 	bind:selected={selected}
 	onSelectedChange={(v) => value = v?.value ?? value}

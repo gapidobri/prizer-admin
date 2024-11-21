@@ -14,7 +14,6 @@
 
 <Select.Root
 	portal={null}
-	name="limit"
 	{items}
 	bind:selected={selected}
 	onSelectedChange={(v) => value = v?.value ?? value}
@@ -28,3 +27,4 @@
 		{/each}
 	</Select.Content>
 </Select.Root>
+<input type="hidden" name="participation_limit" bind:value />

@@ -2,9 +2,29 @@
 	import Ellipsis from 'lucide-svelte/icons/ellipsis';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
+	import type { ParticipationMethod } from '$lib/api';
+	import { toast } from 'svelte-sonner';
+	import EditParticipationMethod from './EditParticipationMethod.svelte';
 
-	export let id: string;
+	export let participationMethod: ParticipationMethod;
+
+	let editOpen = false;
+
+	function handleCopyId() {
+		navigator.clipboard.writeText(participationMethod.id);
+		toast.success('ID copied to clipboard');
+	}
+
+	function handleEdit() {
+		editOpen = true;
+	}
+
+	function handleDelete() {
+
+	}
 </script>
+
+<EditParticipationMethod bind:open={editOpen} {participationMethod} />
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
@@ -19,8 +39,12 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item on:click={() => console.log('delete user', id)}>
-			Delete
-		</DropdownMenu.Item>
+		<DropdownMenu.Group>
+			<DropdownMenu.Label>Actions</DropdownMenu.Label>
+			<DropdownMenu.Item on:click={handleCopyId}>Copy ID</DropdownMenu.Item>
+		</DropdownMenu.Group>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item on:click={handleEdit}>Edit</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={handleDelete}>Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

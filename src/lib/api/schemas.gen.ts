@@ -19,7 +19,7 @@ export const $CreatePrizeRequest = {
             type: 'string'
         }
     },
-    required: ['game_id', 'name', 'description', 'count'],
+    required: ['game_id', 'name', 'count'],
     type: 'object'
 } as const;
 
@@ -196,15 +196,15 @@ export const $ParticipationMethod = {
         id: {
             type: 'string'
         },
-        limit: {
-            enum: ['none', 'daily'],
+        name: {
             type: 'string'
         },
-        name: {
+        participation_limit: {
+            enum: ['none', 'daily'],
             type: 'string'
         }
     },
-    required: ['id', 'game_id', 'name', 'limit', 'fields'],
+    required: ['id', 'game_id', 'name', 'participation_limit', 'fields'],
     type: 'object'
 } as const;
 
@@ -258,7 +258,7 @@ export const $Prize = {
             type: 'integer'
         }
     },
-    required: ['id', 'game_id', 'name', 'description', 'count', 'won_count'],
+    required: ['id', 'game_id', 'name', 'count', 'won_count'],
     type: 'object'
 } as const;
 
@@ -274,7 +274,49 @@ export const $PublicPrize = {
             type: 'string'
         }
     },
-    required: ['name', 'description'],
+    required: ['name'],
+    type: 'object'
+} as const;
+
+export const $UpdateParticipationMethodRequest = {
+    properties: {
+        fields: {
+            '$ref': '#/definitions/FieldConfig'
+        },
+        lose_mail_template_id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        participation_limit: {
+            enum: ['none', 'daily'],
+            type: 'string'
+        },
+        win_mail_template_id: {
+            type: 'string'
+        }
+    },
+    required: ['name', 'participation_limit', 'fields'],
+    type: 'object'
+} as const;
+
+export const $UpdatePrizeRequest = {
+    properties: {
+        count: {
+            format: 'int64',
+            type: 'integer'
+        },
+        description: {
+            type: 'string'
+        },
+        image_url: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        }
+    },
     type: 'object'
 } as const;
 

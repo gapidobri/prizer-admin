@@ -1,13 +1,18 @@
 <script lang="ts">
 	import { createTable, Subscribe, Render, createRender } from 'svelte-headless-table';
-	import { readable } from 'svelte/store';
+	import { readable, writable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 	import type { ParticipationMethod } from '$lib/api';
 	import EditParticipationMethod from './EditParticipationMethod.svelte';
+	import DataTableActions from './DataTableActions.svelte';
+	import FieldBadges from './FieldBadges.svelte';
 
 	export let participationMethods: ParticipationMethod[];
 
-	const table = createTable(readable(participationMethods));
+	const w = writable(participationMethods);
+	$: w.set(participationMethods);
+
+	const table = createTable(w);
 
 	const columns = table.createColumns([
 		table.column({
@@ -15,7 +20,7 @@
 			header: 'Name',
 		}),
 		table.column({
-			accessor: 'limit',
+			accessor: 'participation_limit',
 			header: 'Limit',
 			cell: ({ value }) => {
 				if (!value) return '';
@@ -25,19 +30,17 @@
 		table.column({
 			accessor: (item) => item.fields.user,
 			header: 'User Fields',
-			cell: ({ value }) => Object.keys(value).join(', '),
+			cell: ({ value }) => createRender(FieldBadges, { fields: Object.keys(value) }),
 		}),
 		table.column({
 			accessor: (item) => item.fields.participation,
 			header: 'Participation Fields',
-			cell: ({ value }) => Object.keys(value).join(', '),
+			cell: ({ value }) => createRender(FieldBadges, { fields: Object.keys(value) }),
 		}),
 		table.column({
 			accessor: (item) => item,
 			header: '',
-			cell: ({ value }) => {
-				return createRender(EditParticipationMethod, { participationMethod: value });
-			},
+			cell: ({ value }) => createRender(DataTableActions, { participationMethod: value }),
 		}),
 	]);
 

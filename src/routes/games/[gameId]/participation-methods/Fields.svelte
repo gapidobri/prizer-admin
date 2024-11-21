@@ -1,16 +1,16 @@
 <script lang="ts">
 	import type { Field } from '$lib/api';
-	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Label } from '$lib/components/ui/label';
 	import TypeSelect from './TypeSelect.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Plus, Trash } from 'lucide-svelte';
 	import { Input } from '$lib/components/ui/input';
+	import { Checkbox } from '$lib/components/ui/checkbox';
 
 	export let fields: Record<string, Field>;
 
 	let newFieldName: string;
-	
+
 	function handleAddField() {
 		const key = newFieldName.trim();
 		if (!Object.keys(fields).includes(key)) {
@@ -49,18 +49,16 @@
 			</div>
 			<div class="flex gap-4">
 				<div class="flex items-center space-x-2">
-					<Checkbox bind:checked={fields[key].unique} id="{key}-unique" />
+					<Checkbox bind:checked={fields[key].unique} />
 					<Label
-						for="{key}-unique"
 						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 					>
 						Unique
 					</Label>
 				</div>
 				<div class="flex items-center space-x-2">
-					<Checkbox bind:checked={fields[key].required} id="{key}-required" />
+					<Checkbox bind:checked={fields[key].required} />
 					<Label
-						for="{key}-required"
 						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 					>
 						Required

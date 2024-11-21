@@ -2,7 +2,7 @@
 
 export type CreatePrizeRequest = {
     count: number;
-    description: string;
+    description?: string;
     game_id: string;
     image_url?: string;
     name: string;
@@ -73,8 +73,8 @@ export type ParticipationMethod = {
     fields: FieldConfig;
     game_id: string;
     id: string;
-    limit: 'none' | 'daily';
     name: string;
+    participation_limit: 'none' | 'daily';
 };
 
 export type ParticipationRequest = {
@@ -89,7 +89,7 @@ export type ParticipationResponse = {
 
 export type Prize = {
     count: number;
-    description: string;
+    description?: string;
     game_id: string;
     id: string;
     image_url?: string;
@@ -98,9 +98,24 @@ export type Prize = {
 };
 
 export type PublicPrize = {
-    description: string;
+    description?: string;
     image_url?: string;
     name: string;
+};
+
+export type UpdateParticipationMethodRequest = {
+    fields: FieldConfig;
+    lose_mail_template_id?: string;
+    name: string;
+    participation_limit: 'none' | 'daily';
+    win_mail_template_id?: string;
+};
+
+export type UpdatePrizeRequest = {
+    count?: number;
+    description?: string;
+    image_url?: string;
+    name?: string;
 };
 
 export type User = {
@@ -122,8 +137,8 @@ export type WonPrize = {
 
 export type GetDrawMethodsData = {
     query?: {
-        gameId?: string;
-        participationMethodId?: string;
+        game_id?: string;
+        participation_id?: string;
     };
 };
 
@@ -147,7 +162,7 @@ export type GetGameError = ErrorResponse;
 
 export type GetParticipationMethodsData = {
     query?: {
-        gameId?: string;
+        game_id?: string;
     };
 };
 
@@ -155,9 +170,42 @@ export type GetParticipationMethodsResponse2 = GetParticipationMethodsResponse;
 
 export type GetParticipationMethodsError = ErrorResponse;
 
+export type UpdateParticipationMethodData = {
+    body: UpdateParticipationMethodRequest;
+    path: {
+        participationMethodId: string;
+    };
+};
+
+export type UpdateParticipationMethodResponse = void;
+
+export type UpdateParticipationMethodError = ErrorResponse;
+
+export type UnlinkDrawMethodData = {
+    path: {
+        drawMethodId: string;
+        participationMethodId: string;
+    };
+};
+
+export type UnlinkDrawMethodResponse = void;
+
+export type UnlinkDrawMethodError = ErrorResponse;
+
+export type LinkDrawMethodData = {
+    path: {
+        drawMethodId: string;
+        participationMethodId: string;
+    };
+};
+
+export type LinkDrawMethodResponse = void;
+
+export type LinkDrawMethodError = ErrorResponse;
+
 export type GetPrizesData = {
     query?: {
-        gameId?: string;
+        game_id?: string;
     };
 };
 
@@ -183,9 +231,20 @@ export type DeletePrizeResponse = void;
 
 export type DeletePrizeError = ErrorResponse;
 
+export type UpdatePrizeData = {
+    body?: UpdatePrizeRequest;
+    path: {
+        prizeId: string;
+    };
+};
+
+export type UpdatePrizeResponse = void;
+
+export type UpdatePrizeError = ErrorResponse;
+
 export type GetUsersData = {
     query?: {
-        gameId?: string;
+        game_id?: string;
     };
 };
 
@@ -205,9 +264,9 @@ export type GetUserError = ErrorResponse;
 
 export type GetWonPrizesData = {
     query?: {
-        gameId?: string;
-        prizeId?: string;
-        userId?: string;
+        game_id?: string;
+        prize_id?: string;
+        user_id?: string;
     };
 };
 
@@ -307,6 +366,64 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/participation-methods/{participationMethodId}': {
+        put: {
+            req: UpdateParticipationMethodData;
+            res: {
+                '204': void;
+                /**
+                 * ErrorResponse
+                 */
+                '400': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '403': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '500': ErrorResponse;
+            };
+        };
+    };
+    '/participation-methods/{participationMethodId}/draw-methods/{drawMethodId}': {
+        delete: {
+            req: UnlinkDrawMethodData;
+            res: {
+                '204': void;
+                /**
+                 * ErrorResponse
+                 */
+                '400': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '403': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '500': ErrorResponse;
+            };
+        };
+        post: {
+            req: LinkDrawMethodData;
+            res: {
+                '204': void;
+                /**
+                 * ErrorResponse
+                 */
+                '400': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '403': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '500': ErrorResponse;
+            };
+        };
+    };
     '/prizes': {
         get: {
             req: GetPrizesData;
@@ -351,6 +468,24 @@ export type $OpenApiTs = {
     '/prizes/{prizeId}': {
         delete: {
             req: DeletePrizeData;
+            res: {
+                '204': void;
+                /**
+                 * ErrorResponse
+                 */
+                '400': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '403': ErrorResponse;
+                /**
+                 * ErrorResponse
+                 */
+                '500': ErrorResponse;
+            };
+        };
+        put: {
+            req: UpdatePrizeData;
             res: {
                 '204': void;
                 /**
